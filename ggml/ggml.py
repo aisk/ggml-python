@@ -104,7 +104,12 @@ def load_shared_library(module_name: str, lib_base_name: str):
 
     for lib_name in lib_names:
         try:
-            with importlib_resources.as_file(importlib_resources.files(module_name).joinpath("lib", lib_name)) as p: # type: ignore
+            resource = (
+                importlib_resources.files(module_name)
+                .joinpath("lib")
+                .joinpath(lib_name)
+            )
+            with importlib_resources.as_file(resource) as p:  # type: ignore
                 p = cast(pathlib.Path, p)
                 if os.path.exists(p):
                     path = p
