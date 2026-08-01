@@ -103,6 +103,11 @@ def load_shared_library(module_name: str, lib_base_name: str):
     path: Optional[pathlib.Path] = None
 
     for lib_name in lib_names:
+        local_path = base_path / lib_name
+        if local_path.exists():
+            path = local_path
+            break
+
         try:
             resource = (
                 importlib_resources.files(module_name)
